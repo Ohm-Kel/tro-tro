@@ -110,6 +110,10 @@ export interface SearchRequest {
   fromName?: string;
   /** Station name for destination (resolved server-side) */
   toName?: string;
+  /** Latitude coordinate for origin (if using Current Location) */
+  fromLat?: number;
+  /** Longitude coordinate for origin (if using Current Location) */
+  fromLng?: number;
 }
 
 export interface SearchResponse {

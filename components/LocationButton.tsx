@@ -5,7 +5,7 @@ import { getCurrentPosition } from "@/lib/geolocation";
 import type { Station } from "@/lib/types";
 
 interface LocationButtonProps {
-  onLocationFound: (station: Station, distanceMeters: number) => void;
+  onLocationFound: (lat: number, lng: number) => void;
   onError: (message: string) => void;
 }
 
@@ -30,27 +30,9 @@ export default function LocationButton({
         maximumAge: 0,
       });
 
-      // 2. Fetch nearest station from our API
-      const res = await fetch(
-        `/api/nearest?lat=${coords.latitude}&lng=${coords.longitude}`
-      );
-      
-      if (!res.ok) {
-        throw new Error("Failed to find nearest station");
-      }
-
-      const data = await res.json();
-
-      if (data.error) {
-        throw new Error(data.error);
-      }
-
-      if (data.station) {
-        onLocationFound(data.station, data.distanceMeters);
-        setState("idle");
-      } else {
-        throw new Error("No stations found nearby.");
-      }
+      // 2. Directly yield latitude and longitude coordinates
+      onLocationFound(coords.latitude, coords.longitude);
+      setState("idle");
     } catch (err: any) {
       const msg = err.message || "Could not retrieve location.";
       setErrorMessage(msg);

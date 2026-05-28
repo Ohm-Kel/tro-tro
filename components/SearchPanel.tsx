@@ -31,6 +31,7 @@ export default function SearchPanel({
   const [toValue, setToValue] = useState("");
   const [fromStation, setFromStation] = useState<Station | null>(null);
   const [toStation, setToStation] = useState<Station | null>(null);
+  const [fromCoords, setFromCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   // Natural Language Search State
   const [nlText, setNlText] = useState("");
@@ -56,8 +57,10 @@ export default function SearchPanel({
       payload = {
         fromId: fromStation?.id,
         toId: toStation?.id,
-        fromName: fromStation ? undefined : fromValue,
+        fromName: fromStation ? undefined : (fromValue === "Current Location" ? undefined : fromValue),
         toName: toStation ? undefined : toValue,
+        fromLat: fromCoords?.lat,
+        fromLng: fromCoords?.lng,
       };
     } else {
       if (!nlText.trim()) {
@@ -90,15 +93,21 @@ export default function SearchPanel({
     }
   };
 
-  const handleGPSLocationFound = (station: Station, distanceMeters: number) => {
-    setFromStation(station);
-    setFromValue(station.name);
-    onLocationFound(station.lat, station.lng);
+  const handleGPSLocationFound = (lat: number, lng: number) => {
+    setFromStation(null);
+    setFromCoords({ lat, lng });
+    setFromValue("Current Location");
+    onLocationFound(lat, lng);
   };
 
-  // If user clears the input text, clear the selected station object
+  // If user clears the input text or types something else, clear GPS coords and station
   useEffect(() => {
-    if (!fromValue) setFromStation(null);
+    if (!fromValue) {
+      setFromStation(null);
+      setFromCoords(null);
+    } else if (fromValue !== "Current Location") {
+      setFromCoords(null);
+    }
   }, [fromValue]);
 
   useEffect(() => {
