@@ -1,0 +1,84 @@
+[
+  {
+    "routeId": "rt-kotei-tech",
+    "stationId": "st-kotei",
+    "sequence": 1,
+    "fareFromStart": 0.0
+  },
+  {
+    "routeId": "rt-kotei-tech",
+    "stationId": "st-tech-junction",
+    "sequence": 2,
+    "fareFromStart": 2.0
+  },
+
+  {
+    "routeId": "rt-ayeduase-tech",
+    "stationId": "st-ayeduase",
+    "sequence": 1,
+    "fareFromStart": 0.0
+  },
+  {
+    "routeId": "rt-ayeduase-tech",
+    "stationId": "st-tech-junction",
+    "sequence": 2,
+    "fareFromStart": 2.0
+  },
+
+  {
+    "routeId": "rt-tech-adum",
+    "stationId": "st-tech-junction",
+    "sequence": 1,
+    "fareFromStart": 0.0
+  },
+  {
+    "routeId": "rt-tech-adum",
+    "stationId": "st-bomso",
+    "sequence": 2,
+    "fareFromStart": 1.5
+  },
+  {
+    "routeId": "rt-tech-adum",
+    "stationId": "st-asafoterminal",
+    "sequence": 3,
+    "fareFromStart": 3.5
+  },
+  {
+    "routeId": "rt-tech-adum",
+    "stationId": "st-adum",
+    "sequence": 4,
+    "fareFromStart": 4.5
+  },
+
+  {
+    "routeId": "rt-tech-kejetia",
+    "stationId": "st-tech-junction",
+    "sequence": 1,
+    "fareFromStart": 0.0
+  },
+  {
+    "routeId": "rt-tech-kejetia",
+    "stationId": "st-bomso",
+    "sequence": 2,
+    "fareFromStart": 1.5
+  },
+  {
+    "routeId": "rt-tech-kejetia",
+    "stationId": "st-kejetia",
+    "sequence": 3,
+    "fareFromStart": 5.0
+  },
+
+  {
+    "routeId": "rt-kejetia-kath",
+    "stationId": "st-kejetia",
+    "sequence": 1,
+    "fareFromStart": 0.0
+  },
+  {
+    "routeId": "rt-kejetia-kath",
+    "stationId": "st-kath",
+    "sequence": 2,
+    "fareFromStart": 2.5
+  }
+]

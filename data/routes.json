@@ -1,0 +1,37 @@
+[
+  {
+    "id": "rt-kotei-tech",
+    "name": "Kotei–Tech",
+    "color": "#10b981",
+    "vehicle_note": "🚐 White tro-tro, green stripes",
+    "bidirectional": true
+  },
+  {
+    "id": "rt-ayeduase-tech",
+    "name": "Ayeduase–Tech",
+    "color": "#3b82f6",
+    "vehicle_note": "🚐 White tro-tro, blue stripes",
+    "bidirectional": true
+  },
+  {
+    "id": "rt-tech-adum",
+    "name": "Tech–Adum",
+    "color": "#f59e0b",
+    "vehicle_note": "🚐 Yellow tro-tro, red stripes",
+    "bidirectional": true
+  },
+  {
+    "id": "rt-tech-kejetia",
+    "name": "Tech–Kejetia",
+    "color": "#8b5cf6",
+    "vehicle_note": "🚐 Yellow tro-tro, black stripes",
+    "bidirectional": true
+  },
+  {
+    "id": "rt-kejetia-kath",
+    "name": "Kejetia–KATH",
+    "color": "#ec4899",
+    "vehicle_note": "🚐 White tro-tro, red stripes",
+    "bidirectional": true
+  }
+]

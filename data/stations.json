@@ -1,0 +1,66 @@
+[
+  {
+    "id": "st-tech-junction",
+    "name": "Tech Junction",
+    "aliases": ["Tech", "KNUST", "KNUST Junction", "University", "KNUST Gate"],
+    "lat": 6.6745,
+    "lng": -1.5716,
+    "city": "Kumasi"
+  },
+  {
+    "id": "st-adum",
+    "name": "Adum",
+    "aliases": ["Adum Market", "Down Town", "Adum Station"],
+    "lat": 6.6864,
+    "lng": -1.6215,
+    "city": "Kumasi"
+  },
+  {
+    "id": "st-kejetia",
+    "name": "Kejetia",
+    "aliases": ["Kejetia Market", "Central Market", "Kejetia Terminal", "Big Market"],
+    "lat": 6.6960,
+    "lng": -1.6212,
+    "city": "Kumasi"
+  },
+  {
+    "id": "st-kath",
+    "name": "KATH",
+    "aliases": ["Komfo Anokye", "Komfo Anokye Hospital", "Teaching Hospital", "Hospital"],
+    "lat": 6.6967,
+    "lng": -1.6278,
+    "city": "Kumasi"
+  },
+  {
+    "id": "st-kotei",
+    "name": "Kotei",
+    "aliases": ["Kotei Station", "Kotei Town"],
+    "lat": 6.6580,
+    "lng": -1.5740,
+    "city": "Kumasi"
+  },
+  {
+    "id": "st-ayeduase",
+    "name": "Ayeduase",
+    "aliases": ["Ayeduase Gate", "Ayeduase Town", "Aduase"],
+    "lat": 6.6710,
+    "lng": -1.5580,
+    "city": "Kumasi"
+  },
+  {
+    "id": "st-bomso",
+    "name": "Bomso",
+    "aliases": ["Bomso Gate", "Bomso Station"],
+    "lat": 6.6780,
+    "lng": -1.5850,
+    "city": "Kumasi"
+  },
+  {
+    "id": "st-asafoterminal",
+    "name": "Asafo Terminal",
+    "aliases": ["Asafo", "Asafo Market", "VIP Station"],
+    "lat": 6.6850,
+    "lng": -1.6140,
+    "city": "Kumasi"
+  }
+]
