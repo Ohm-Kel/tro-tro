@@ -126,16 +126,19 @@ export default function SearchPanel({
       transition={{ type: "spring", damping: 25, stiffness: 200 }}
       className="fixed bottom-0 left-0 right-0 z-40 p-4 safe-bottom sm:absolute sm:top-4 sm:left-4 sm:bottom-auto sm:right-auto sm:w-[420px] sm:p-0"
     >
-      <div className="glass rounded-2xl overflow-hidden shadow-2xl border border-white/[0.08]">
-        {/* Header Tabs */}
-        <div className="flex border-b border-white/5 bg-slate-900/40">
+      <div className="glass-heavy rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/[0.08] relative">
+        {/* Top visual glow bar */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-500/40 to-transparent"></div>
+
+        {/* Header Tabs Tray */}
+        <div className="flex border-b border-white/[0.04] bg-slate-950/70 p-1.5 gap-1.5">
           <button
             type="button"
             onClick={() => setSearchMode("structured")}
-            className={`flex-1 py-3 text-xs font-semibold uppercase tracking-wider text-center transition-all ${
+            className={`flex-1 py-2 text-[10px] font-extrabold uppercase tracking-widest text-center transition-all duration-300 rounded-xl cursor-pointer ${
               searchMode === "structured"
-                ? "text-amber-500 border-b-2 border-amber-500 bg-white/[0.02]"
-                : "text-slate-400 hover:text-white"
+                ? "text-amber-400 bg-white/[0.05] shadow-[0_0_15px_rgba(251,191,36,0.08)] border border-white/5"
+                : "text-slate-500 hover:text-white"
             }`}
           >
             Route Finder
@@ -143,10 +146,10 @@ export default function SearchPanel({
           <button
             type="button"
             onClick={() => setSearchMode("natural")}
-            className={`flex-1 py-3 text-xs font-semibold uppercase tracking-wider text-center transition-all ${
+            className={`flex-1 py-2 text-[10px] font-extrabold uppercase tracking-widest text-center transition-all duration-300 rounded-xl cursor-pointer ${
               searchMode === "natural"
-                ? "text-amber-500 border-b-2 border-amber-500 bg-white/[0.02]"
-                : "text-slate-400 hover:text-white"
+                ? "text-amber-400 bg-white/[0.05] shadow-[0_0_15px_rgba(251,191,36,0.08)] border border-white/5"
+                : "text-slate-500 hover:text-white"
             }`}
           >
             AI Chat Search
@@ -154,11 +157,14 @@ export default function SearchPanel({
         </div>
 
         {/* Search Form */}
-        <form onSubmit={handleSearch} className="p-4 space-y-4 bg-slate-900/70 backdrop-blur-2xl">
+        <form onSubmit={handleSearch} className="p-5 space-y-5 bg-slate-950/30 backdrop-blur-3xl">
           {searchMode === "structured" ? (
-            <div className="space-y-3">
+            <div className="space-y-4 relative">
+              {/* Visual connecting line between From/To inputs (Transit UI detail) */}
+              <div className="absolute left-[21px] top-[34px] bottom-[34px] w-[2px] border-l-2 border-dashed border-slate-700/60 pointer-events-none z-10"></div>
+
               {/* Origin Station Input */}
-              <div className="relative">
+              <div className="relative z-20">
                 <AutocompleteDropdown
                   value={fromValue}
                   onChange={setFromValue}
@@ -166,22 +172,22 @@ export default function SearchPanel({
                     setFromStation(station);
                     setFromValue(station.name);
                   }}
-                  placeholder="Where are you starting from?"
+                  placeholder="Starting Location"
                   ariaLabel="Starting station"
                   icon={
                     <svg
-                      className="w-4 h-4 text-green-500"
+                      className="w-4 h-4 text-[#10b981] drop-shadow-[0_0_6px_rgba(16,185,129,0.4)]"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      strokeWidth={2.5}
+                      strokeWidth={3}
                     >
                       <circle cx={12} cy={12} r={3} />
-                      <circle cx={12} cy={12} r={9} />
+                      <circle cx={12} cy={12} r={8} />
                     </svg>
                   }
                 />
-                <div className="absolute right-1 top-1.5 z-20">
+                <div className="absolute right-1.5 top-1.5 z-30">
                   <LocationButton
                     onLocationFound={handleGPSLocationFound}
                     onError={(msg) => onError(msg)}
@@ -190,7 +196,7 @@ export default function SearchPanel({
               </div>
 
               {/* Destination Station Input */}
-              <div>
+              <div className="relative z-20">
                 <AutocompleteDropdown
                   value={toValue}
                   onChange={setToValue}
@@ -202,7 +208,7 @@ export default function SearchPanel({
                   ariaLabel="Destination station"
                   icon={
                     <svg
-                      className="w-4 h-4 text-red-500"
+                      className="w-4 h-4 text-[#f43f5e] drop-shadow-[0_0_6px_rgba(244,63,94,0.4)]"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -229,7 +235,7 @@ export default function SearchPanel({
                 placeholder="Ask like: 'How do I get to KATH from Tech Junction?' or 'take me from KNUST Gate to Kejetia'"
                 aria-label="Natural language search"
                 rows={3}
-                className="w-full bg-slate-900/60 border border-white/10 hover:border-white/20 focus:border-amber-500 rounded-xl p-3 text-white placeholder-slate-500 font-sans text-sm focus:outline-none transition-all duration-200 resize-none"
+                className="w-full bg-slate-950/60 border border-white/[0.06] hover:border-white/12 rounded-xl p-4 text-white placeholder-slate-500 font-sans text-xs focus:outline-none transition-all duration-200 resize-none shadow-inner"
               />
             </div>
           )}
@@ -237,33 +243,33 @@ export default function SearchPanel({
           {/* Action Row */}
           <div className="flex items-center justify-between gap-3 pt-1">
             {searchMode === "structured" ? (
-              <span className="text-xs text-slate-400">
-                Type 2+ chars for stations
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 select-none">
+                Type 2+ characters
               </span>
             ) : (
-              <span className="text-xs text-slate-400">
-                Type Pidgin, Twi or English
+              <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 select-none">
+                English, Pidgin, or Twi
               </span>
             )}
 
             <button
               type="submit"
               disabled={isSearchDisabled || isSearching}
-              className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 active:scale-95 disabled:from-slate-800 disabled:to-slate-800 disabled:text-slate-500 disabled:scale-100 disabled:cursor-not-allowed text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm transition-all duration-150 flex items-center justify-center gap-2 min-h-[44px]"
+              className="btn-premium-glow bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 hover:shadow-[0_0_25px_rgba(251,191,36,0.3)] active:scale-[0.97] disabled:from-slate-900 disabled:to-slate-900 disabled:text-slate-600 disabled:scale-100 disabled:shadow-none disabled:cursor-not-allowed text-slate-950 font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider transition-all duration-200 flex items-center justify-center gap-2 min-h-[44px] cursor-pointer border border-amber-300/10"
             >
               {isSearching ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-slate-950/20 border-t-slate-950 rounded-full animate-spin"></div>
-                  Searching...
+                  <div className="w-3.5 h-3.5 border-2 border-slate-950/20 border-t-slate-950 rounded-full animate-spin"></div>
+                  Searching
                 </>
               ) : (
                 <>
                   <svg
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    strokeWidth={2.5}
+                    strokeWidth={3}
                   >
                     <path
                       strokeLinecap="round"

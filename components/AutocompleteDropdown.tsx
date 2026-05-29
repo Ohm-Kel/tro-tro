@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import type { Station } from "@/lib/types";
 
 interface AutocompleteDropdownProps {
@@ -123,38 +124,55 @@ export default function AutocompleteDropdown({
         )}
       </div>
 
-      {isOpen && suggestions.length > 0 && (
-        <ul className="absolute top-full left-0 right-0 mt-2 bg-slate-900/95 backdrop-blur-lg rounded-xl shadow-2xl border border-white/10 overflow-hidden z-50 py-1 max-h-60 overflow-y-auto">
-          {suggestions.map((station, idx) => {
-            const hasAlias = station.aliases && station.aliases.length > 0;
-            const aliasToShow = hasAlias
-              ? station.aliases.find(
-                  (alias) => alias.toLowerCase() !== station.name.toLowerCase()
-                )
-              : null;
+      <AnimatePresence>
+        {isOpen && suggestions.length > 0 && (
+          <motion.ul
+            initial={{ opacity: 0, y: -8, scale: 0.99 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.99 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="absolute top-full left-0 right-0 mt-2 bg-[#090d16]/95 backdrop-blur-xl rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-white/10 overflow-hidden z-50 py-1 max-h-60 overflow-y-auto"
+          >
+            {suggestions.map((station, idx) => {
+              const hasAlias = station.aliases && station.aliases.length > 0;
+              const aliasToShow = hasAlias
+                ? station.aliases.find(
+                    (alias) => alias.toLowerCase() !== station.name.toLowerCase()
+                  )
+                : null;
 
-            return (
-              <li
-                key={station.id}
-                onClick={() => handleSelect(station)}
-                onMouseEnter={() => setFocusedIndex(idx)}
-                className={`px-4 py-3 cursor-pointer text-white text-sm font-sans flex flex-col transition-colors duration-150 ${
-                  focusedIndex === idx
-                    ? "bg-white/10 text-amber-400"
-                    : "hover:bg-white/5"
-                }`}
-              >
-                <span className="font-semibold">{station.name}</span>
-                {aliasToShow && (
-                  <span className="text-xs text-slate-400 mt-0.5">
-                    ({aliasToShow})
+              return (
+                <li
+                  key={station.id}
+                  onClick={() => handleSelect(station)}
+                  onMouseEnter={() => setFocusedIndex(idx)}
+                  className={`px-4 py-2.5 cursor-pointer text-white text-sm font-sans flex items-center gap-3 transition-colors duration-150 select-none ${
+                    focusedIndex === idx
+                      ? "bg-white/[0.08] text-amber-400"
+                      : "hover:bg-white/[0.04]"
+                  }`}
+                >
+                  {/* Station/Terminal marker icon */}
+                  <span className="text-slate-500 shrink-0 text-xs select-none">
+                    📍
                   </span>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-      )}
+                  
+                  <div className="flex flex-col min-w-0">
+                    <span className="font-semibold text-slate-100 truncate">
+                      {station.name}
+                    </span>
+                    {aliasToShow && (
+                      <span className="text-[10px] text-slate-500 font-medium truncate -mt-0.5">
+                        {aliasToShow}
+                      </span>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

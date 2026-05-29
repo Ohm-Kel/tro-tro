@@ -44,39 +44,66 @@ export default function RouteCard({
     <motion.div
       variants={cardVariants}
       onClick={onSelect}
-      className={`glass cursor-pointer rounded-2xl p-4 transition-all duration-200 border text-left focus-visible:ring-2 focus-visible:ring-amber-500 select-none ${
+      className={`glass cursor-pointer rounded-2xl p-4 transition-all duration-300 border text-left focus-visible:ring-2 focus-visible:ring-amber-500 select-none relative ${
         isSelected
-          ? "border-amber-500/60 bg-white/[0.10] shadow-[0_0_20px_rgba(245,158,11,0.15)]"
-          : "border-white/[0.08] hover:border-white/20 hover:bg-white/[0.08]"
+          ? "border-amber-500/80 bg-slate-900/60 shadow-[0_0_30px_rgba(251,191,36,0.12)]"
+          : "border-white/[0.06] hover:border-white/15 hover:bg-white/[0.04]"
       }`}
     >
+      {/* Selection border indicator */}
+      {isSelected && (
+        <div className="absolute top-0 bottom-0 left-0 w-[3px] bg-amber-500 rounded-l-2xl"></div>
+      )}
+
       {/* Header Row */}
-      <div className="flex items-center justify-between gap-2 mb-2">
-        <h3 className="font-semibold text-slate-100 text-sm md:text-base truncate">
-          {routeSummary}
-        </h3>
+      <div className="flex items-start justify-between gap-3 mb-3">
+        <div className="flex flex-col gap-1 min-w-0">
+          <h3 className="font-bold text-slate-100 text-sm md:text-base leading-tight truncate">
+            {routeSummary}
+          </h3>
+          
+          {/* Visual Chips for Route properties */}
+          <div className="flex flex-wrap items-center gap-1.5 mt-1">
+            {segments.length === 1 ? (
+              <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[9px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-md">
+                ⚡ Direct Route
+              </span>
+            ) : (
+              <span className="bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[9px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-md">
+                🔄 {segments.length - 1} Transfer{segments.length > 2 ? "s" : ""}
+              </span>
+            )}
+            
+            {isBest && (
+              <span className="bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[9px] uppercase font-extrabold tracking-wider px-2 py-0.5 rounded-md">
+                ₵ Best Fare
+              </span>
+            )}
+          </div>
+        </div>
+
         {isBest && (
-          <span className="bg-amber-500/20 text-amber-400 text-xs px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wide">
-            Best Route
+          <span className="bg-amber-500 text-slate-950 text-[9px] px-2 py-0.5 rounded font-extrabold uppercase tracking-widest select-none shrink-0 shadow-[0_0_12px_rgba(251,191,36,0.2)]">
+            RANK 1
           </span>
         )}
       </div>
 
       {/* Stats Row */}
-      <div className="flex items-center gap-4 text-xs md:text-sm text-slate-400 mb-4 border-b border-white/5 pb-2">
+      <div className="flex items-center gap-3 text-xs text-slate-400 mb-4 border-b border-white/5 pb-2.5">
         <div className="flex items-baseline gap-1">
-          <span className="text-amber-400 font-semibold text-base font-mono-fare">
+          <span className="text-amber-400 font-bold text-lg font-mono-fare">
             ₵{totalFare.toFixed(2)}
           </span>
         </div>
-        <div className="w-1.5 h-1.5 rounded-full bg-slate-600"></div>
-        <div>{totalStops} stops</div>
-        <div className="w-1.5 h-1.5 rounded-full bg-slate-600"></div>
-        <div>~{estimatedMinutes} mins</div>
+        <div className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
+        <div className="font-semibold text-slate-300">{totalStops} stops</div>
+        <div className="w-1.5 h-1.5 rounded-full bg-slate-700"></div>
+        <div className="font-semibold text-slate-300">~{estimatedMinutes} mins</div>
       </div>
 
       {/* Segment Breakdown */}
-      <div className="space-y-3 pl-1 mb-3">
+      <div className="space-y-4 pl-1 mb-2">
         {segments.map((segment, segIdx) => {
           const isFirstSegment = segIdx === 0;
           const isLastSegment = segIdx === segments.length - 1;
@@ -84,40 +111,57 @@ export default function RouteCard({
 
           return (
             <div key={`seg-${segIdx}`} className="relative pl-6">
-              {/* Step indicator line */}
+              {/* Step indicator line - Color coded to match the route! */}
               <div
-                className="absolute left-[7px] top-[18px] bottom-[-16px] w-[2px] border-l-2 border-dashed border-slate-600"
+                className="absolute left-[7px] top-[18px] bottom-[-22px] w-[2px]"
                 style={{
                   display: isLastSegment ? "none" : "block",
+                  backgroundColor: segment.routeColor,
                 }}
               ></div>
 
               {/* Board Point */}
               <div className="relative mb-2">
                 <span
-                  className={`absolute left-[-24px] top-1 w-[16px] h-[16px] rounded-full flex items-center justify-center border-2 border-slate-900 ${
-                    isFirstSegment ? "bg-green-500" : "bg-amber-500"
-                  }`}
-                ></span>
-                <p className="text-xs font-semibold text-slate-200">
+                  className="absolute left-[-24px] top-1 w-[16px] h-[16px] rounded-full flex items-center justify-center border-2 bg-slate-950"
+                  style={{
+                    borderColor: isFirstSegment ? "#10b981" : "#8b5cf6",
+                  }}
+                >
+                  <span
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{
+                      backgroundColor: isFirstSegment ? "#10b981" : "#8b5cf6",
+                    }}
+                  ></span>
+                </span>
+                <p className="text-xs font-bold text-slate-400">
                   {isFirstSegment ? "Board at" : "Transfer at"}{" "}
-                  <span className="text-white text-sm">
+                  <span className="text-white text-sm font-bold">
                     {segment.boardAt.stationName}
                   </span>
                 </p>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Take <span className="text-amber-400 font-medium">{segment.routeName}</span>
-                </p>
+                
+                {/* Visual Route indicator tag */}
+                <div className="inline-flex items-center gap-1.5 bg-white/5 border border-white/8 px-2 py-0.5 rounded-md mt-1">
+                  <span
+                    className="w-2.5 h-1.5 rounded-full"
+                    style={{ backgroundColor: segment.routeColor }}
+                  ></span>
+                  <span className="text-[10px] text-slate-300 font-semibold">
+                    {segment.routeName}
+                  </span>
+                </div>
               </div>
 
-              {/* Ride segment stop count */}
-              <div className="relative my-2 pl-1">
-                <p className="text-xs text-slate-400 flex items-center gap-1.5 py-1">
-                  <span className="w-1 h-1 rounded-full bg-slate-500"></span>
-                  Ride {stopCount} stop{stopCount > 1 ? "s" : ""}
+              {/* Ride segment stop count details box */}
+              <div className="relative my-2 pl-1.5 py-1.5 pr-3 bg-white/[0.02] border border-white/[0.04] rounded-lg">
+                <p className="text-[11px] text-slate-400 flex flex-wrap items-center gap-1.5">
+                  <span className="text-xs shrink-0">🚐</span>
+                  Ride <span className="text-slate-200 font-bold font-mono">{stopCount} stops</span>
                   {segment.vehicleNote && (
-                    <span className="text-slate-500 italic">
-                      ({segment.vehicleNote})
+                    <span className="text-slate-500 text-[10px] italic">
+                      — {segment.vehicleNote}
                     </span>
                   )}
                 </p>
@@ -126,10 +170,12 @@ export default function RouteCard({
               {/* Alight point for direct or last segment */}
               {isLastSegment && (
                 <div className="relative mt-2">
-                  <span className="absolute left-[-24px] top-1 w-[16px] h-[16px] rounded-full bg-red-500 flex items-center justify-center border-2 border-slate-900"></span>
-                  <p className="text-xs font-semibold text-slate-200">
+                  <span className="absolute left-[-24px] top-1 w-[16px] h-[16px] rounded-full flex items-center justify-center border-2 border-[#f43f5e] bg-slate-950">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#f43f5e]"></span>
+                  </span>
+                  <p className="text-xs font-bold text-slate-400">
                     Alight at{" "}
-                    <span className="text-white text-sm">
+                    <span className="text-white text-sm font-bold">
                       {segment.alightAt.stationName}
                     </span>
                   </p>
@@ -142,9 +188,11 @@ export default function RouteCard({
 
       {/* Fare Breakdown / Details Footer */}
       {segments.length > 1 && (
-        <div className="mt-2 text-xs text-slate-500 text-right font-mono-fare">
+        <div className="mt-4 pt-2 border-t border-white/5 text-[10px] text-slate-500 text-right font-mono-fare">
           Fare breakdown:{" "}
-          {segments.map((s, i) => `₵${s.fare.toFixed(2)}`).join(" + ")}
+          <span className="text-slate-400">
+            {segments.map((s, i) => `₵${s.fare.toFixed(2)}`).join(" + ")}
+          </span>
         </div>
       )}
     </motion.div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import type { Station, RouteOption, SearchResponse } from "@/lib/types";
 import SearchPanel from "@/components/SearchPanel";
@@ -82,13 +83,33 @@ export default function MapRouterPage() {
         />
       </div>
 
-      {/* Floating Header Banner */}
+      {/* Floating Header Dashboard HUD */}
       <div className="absolute top-4 left-4 z-40 pointer-events-auto">
-        <div className="glass px-4 py-2.5 rounded-xl border border-white/10 shadow-lg flex items-center gap-2.5">
-          <span className="text-base select-none">🚐</span>
-          <span className="font-extrabold text-xs tracking-wider text-white uppercase select-none">
-            Kumasi Tro-Tro Route Finder
-          </span>
+        <div className="glass px-4 py-2.5 rounded-2xl border border-white/10 shadow-[0_15px_30px_-10px_rgba(0,0,0,0.8)] flex items-center gap-3.5 backdrop-blur-lg">
+          <Link
+            href="/"
+            className="text-xs text-slate-400 hover:text-white transition-colors flex items-center gap-1 font-bold uppercase tracking-wider pr-2 border-r border-white/10 cursor-pointer"
+            aria-label="Back to landing page"
+          >
+            <span>←</span> <span className="hidden sm:inline">Home</span>
+          </Link>
+          
+          <div className="flex items-center gap-2">
+            <span className="text-lg select-none drop-shadow-[0_0_8px_rgba(251,191,36,0.3)]">🚐</span>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-xs tracking-widest text-white uppercase select-none leading-none">
+                Tro-Tro Router
+              </span>
+              <span className="text-[7px] uppercase tracking-widest text-slate-500 font-bold leading-none mt-0.5">
+                Kumasi Network
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-500/5 border border-emerald-500/20 text-[8px] uppercase tracking-widest text-emerald-400 font-extrabold select-none">
+            <span className="w-1 h-1 rounded-full bg-emerald-400 animate-ping"></span>
+            Online
+          </div>
         </div>
       </div>
 
